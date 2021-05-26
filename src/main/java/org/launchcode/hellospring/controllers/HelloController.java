@@ -26,29 +26,25 @@ public class HelloController {
 
     //Handle request of the form /hello?name = LaunchCode.
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "hello")
+    @ResponseBody
     public String helloWithQueryParam(@RequestParam String name){
+
         return "Hello, " + name + "!";
     }
 
     //Handles the request of the form /hello/LaunchCode
     @GetMapping("hello/{name}")
+    @ResponseBody
     public String helloWithPathParam(@PathVariable String name) {
+
         return "Hello, " + name + "!";
     }
 
     //Displaying a Form
     @GetMapping("form")
     public String helloForm() {
-        String html =
-                "<html>" +
-                        "<body>" +
-                        "<form method = 'post' action = '/hello'>" +
-                        "<input type = 'text' name = 'coder' />" +
-                        "<input type = 'submit' value = 'Greet Me!' />" +
-                        "</form>" +
-                        "</body>" +
-                        "</html>";
-        return html;
+
+        return "form";
     }
 
 }
