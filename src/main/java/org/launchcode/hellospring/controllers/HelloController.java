@@ -2,13 +2,17 @@ package org.launchcode.hellospring.controllers;
 
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 
-@Controller
-@ResponseBody
-@RequestMapping("hello")
-public class HelloController {
+
+//@Controller
+//@ResponseBody
+//@RequestMapping("hello")
+
 
 
 //    @GetMapping("hello")
@@ -18,33 +22,43 @@ public class HelloController {
 //
 //    }
     //Handle request at path /hello
-    @GetMapping("goodbye")
-    public String goodbye(){
-        return "Goodbye, Spring!";
-
-    }
+//    @GetMapping("goodbye")
+//    public String goodbye(){
+//        return "Goodbye, Spring!";
+//
+//    }
+@Controller
+public class HelloController {
 
     //Handle request of the form /hello?name = LaunchCode.
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value = "hello")
-    @ResponseBody
-    public String helloWithQueryParam(@RequestParam String name){
-
-        return "Hello, " + name + "!";
+    @RequestMapping(value = "hello", method = {RequestMethod.GET, RequestMethod.POST})
+    public String hello(@RequestParam String name, Model model){
+        String greeting = "Hello, " + name + "!";
+     model.addAttribute("greeting", greeting);
+        return "hello";
     }
 
     //Handles the request of the form /hello/LaunchCode
     @GetMapping("hello/{name}")
-    @ResponseBody
-    public String helloWithPathParam(@PathVariable String name) {
-
-        return "Hello, " + name + "!";
+    public String helloAgain(@PathVariable String name, Model model) {
+        model.addAttribute("greeting", "Hello " + name + "!");
+        return "hello";
     }
 
     //Displaying a Form
     @GetMapping("form")
     public String helloForm() {
-
         return "form";
+    }
+
+    @GetMapping("hello-names")
+    public String helloNames(Model model){
+        List<String> names = new ArrayList<>();
+        names.add("LaunchCode");
+        names.add("Java");
+        names.add("JavaScript");
+        model.addAttribute("names", names);
+        return "hello-list";
     }
 
 }
